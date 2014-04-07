@@ -1,103 +1,180 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://xmlns.jcp.org/jsf/html">
+<html lang="pt-br" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
     <h:head>
         <title>Facelet Title</title>
         <!-- Latest compiled and minified CSS -->
-        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="css/bootstrap.min.css"/>
 
         <!-- Optional theme -->
         <link rel="stylesheet" href="css/bootstrap-theme.min.css"/>
+        <link rel="stylesheet" href="css/jquery-ui-1.10.4.custom.css"/>
         <script src="js/jquery.min.js"></script>
         <!-- Latest compiled and minified JavaScript -->
         <script src="js/bootstrap.min.js"></script>
+        <script src="js/jquery-ui-1.10.4.custom.js"></script>
+
     </h:head>
     <h:body>
-        <div class="container" align="left">
-            <div class="container" align="right">
-                <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-                    <span class="glyphicon glyphicon-inbox"></span> Cadastro
-                </button>
-            </div>
-            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-                        </div>
-                        <div class="modal-body">
-                            ...
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Save changes</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal fade" id="modal-info" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-                        </div>
-                        <div class="modal-body">
-                            ...
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Save changes</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal fade" id="modal-talk" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4 class="modal-title" id="myModalLabel">Modal title</h4>
-                        </div>
-                        <div class="modal-body">
-                            ...
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Save changes</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="container" align="left">
-                <ul class="nav nav-tabs">
-                    <li class="active"><a href="#home" data-toggle="tab">Usuário</a></li>
-                </ul>
-                <div class="container-fluid" align="left">
-                    <!-- Tab panes -->
-                    <div class="tab-content">
-                        <div class="tab-pane active" id="home">
-                            <div class="row" style="border:1px solid #ccc; border-top:none;padding: 10px">
+        #{controllerChat.usuario.nome}
+        <!-- diaglo -->
+        <div id="cadastro" title="Cadastro de Usuário">
+            <h:form >
+                <div class="panel panel-default">
+                    <div class="panel-body" >
 
-                                <div class="col-xs-6 col-sm-3">
-                                    <div class="dropdown">
-                                        <a data-toggle="dropdown" href="#"><i class="glyphicon glyphicon-user"/> Usuario 1</a>
-                                        <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel" >
-                                            <p style="margin-left: 5px"><a href="#"  data-toggle="modal" data-target="#modal-talk"><i class="glyphicon glyphicon-phone"/> Iniciar Conversa</a></p>
-                                            <p style="margin-left: 5px"><a href="#"  data-toggle="modal" data-target="#modal-info"><i class="glyphicon glyphicon-info-sign"/> Informações</a></p>
-                                        </ul>
-                                    </div>
+                        <div class="form-group">
+                            <label for="nome">Nome</label>
+                            <h:inputText  class="form-control" value="#{controllerChat.usuario.nome}"  id="nome" />
 
-                                </div>
-                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="apelido">Apelido</label>
+                            <input type="text" class="form-control" value="#{controllerChat.usuario.apelido}" id="apelido" placeholder="Digite seu apelido"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="text" class="form-control" value="#{controllerChat.usuario.email}" id="email" placeholder="Digite seu email"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="data">Data Nascimento</label>
+                            <input type="date" class="form-control" value="#{controllerChat.usuario.data}" pattern="\d{1,2}/\d{1,2}/\d{4}" id="data" placeholder="Data Nascimento"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="cidade">Cidade</label>
+                            <input type="text" class="form-control" value="#{controllerChat.usuario.cidade}" id="cidade" placeholder="Cidade"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="frase">Frase</label>
+                            <input type="text" class="form-control" value="#{controllerChat.usuario.frase}" id="frase" placeholder="Digite uma frase"/>
                         </div>
 
+
+                    </div>
+                    <div class="panel-footer">
+                        <button type="button"  onclick="$('#cadastro').dialog('close')" class="btn btn-default">Cancelar</button>
+                        <h:commandButton  class="btn btn-primary" value="Enviar" actionListener="#{controllerChat.salvar(controllerChat.usuario)}" style="float: right"/>
+
+
+                    </div>
+                </div>
+            </h:form>
+        </div>
+        <!-- diaglo -->
+        <div id="dialog1" title="Usuario1">
+            <div class="panel panel-default" style="width: 370px">
+                <div class="panel-body" style="height: 200px;overflow-y: scroll">
+                    Panel content goes here..
+                    dd
+                    d<br/>
+                    d<br/>
+                    d<br/>
+                    d<br/>
+                    d<br/>
+                    d<br/>
+                    Panel content goes here..
+                    dd
+                    d<br/>
+                    d<br/>
+                    d<br/>
+                    d<br/>
+                    d<br/>
+                    d<br/>
+                </div>
+                <div class="panel-footer">
+                    <div class="row">
+                        <div class="col-xs-10">
+                            <textarea class="form-control" rows="3" style="resize: none;width: 250px"></textarea>
+                        </div>
+                        <div class="col-xs-2">
+                            <button type="button" class="btn btn-primary btn-lg" style="float: right">Enviar</button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+        <!-- diaglo -->
+        <div id="dialog2" title="usuario 2" >
+            <div class="panel panel-default" style="width: 370px">
+                <div class="panel-body" style="height: 200px;overflow-y: scroll">
+                    Panel content goes here..
+                    dd
+                    d<br/>
+                    d<br/>
+                    d<br/>
+                    d<br/>
+                    d<br/>
+                    d<br/>
+                    Panel content goes here..
+                    dd
+                    d<br/>
+                    d<br/>
+                    d<br/>
+                    d<br/>
+                    d<br/>
+                    d<br/>
+                </div>
+                <div class="panel-footer">
+                    <div class="row">
+                        <div class="col-xs-10">
+                            <textarea class="form-control" rows="3" style="resize: none;width: 250px"></textarea>
+                        </div>
+                        <div class="col-xs-2">
+                            <button type="button" class="btn btn-primary btn-lg" style="float: right">Enviar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container" align="left">
+            <div class="container " align="right" >
+                <button type="button" class="btn btn-primary btn-lg" onclick="$('#cadastro').dialog('open');">
+                    <span class="glyphicon glyphicon-inbox"></span> Cadastro
+                </button>
+            </div>
+            <div id="tabs">
+
+                <ul>
+                    <li><a href="#tabs-1">Usuário</a></li>
+                </ul>
+                <div id="tabs-1">
+                    
+                        <c:forEach id="lista" items="#{controllerChat.chatUser}" var="user"  varStatus="id" >
+                            <p>
+                                <div class="dropdown">
+                                    <a data-toggle="dropdown" href="#"><i class="glyphicon glyphicon-user"/> #{user.getNome()}</a>
+                                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel" >
+                                        <p style="margin-left: 5px"><a href="#" id="1" class='conversa' ><i class="glyphicon glyphicon-phone"/> Iniciar Conversa</a></p>
+                                        <p style="margin-left: 5px"><a href="#"  data-toggle="modal" data-target="#modal-info"><i class="glyphicon glyphicon-info-sign"/> Informações</a></p>
+                                    </ul>
+                                </div>
+                            </p>
+                        </c:forEach>
+                </div>
+
+            </div>
+        </div>
+        <script>
+           
+            $('document').ready(function() {
+                $("#tabs").tabs();
+                $("#cadastro").dialog({autoOpen: false});
+                $("#dialog1").dialog({autoOpen: false});
+                $("#dialog2").dialog({autoOpen: false});
+                $(".conversa").click(function() {
+                    id = $(this).attr("id");
+
+                    $("#dialog" + id).dialog({width: 405});
+                    $("#dialog" + id).dialog("open");
+                });
+            })
+
+
+        </script>
 
     </h:body>
 </html>
