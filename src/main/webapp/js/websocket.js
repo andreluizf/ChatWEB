@@ -30,27 +30,15 @@ function join() {
     $.ajax({
         type: "POST",
         url: "./cadastro",
-        data:  {nome: textNome.value,apelido:textApelido.value,email:textEmail.value,cidade:textCidade.value,data:textData.value, frase:textFrase.value},
+        data: {nome: textNome.value, apelido: textApelido.value, email: textEmail.value, cidade: textCidade.value, data: textData.value, frase: textFrase.value},
         success: function(data) {
-             alert("sucess");
+            alert("sucess");
         },
-        error:function(data){
-             alert("data.code");
+        error: function(data) {
+            alert("data.code");
         }
-       
     });
 
-//    apelido = textApelido;
-//    data = textData;
-//    email = textEmail;
-//    cidade = textCidade;
-//    frase = textFrase;
-//    console.log(textNome);
-//    console.log(apelido);
-//    console.log(email);
-//    console.log(cidade);
-//    console.log(frase);
-//    console.log(data);
     init(name);
     setTimeout(function() {
         websocket.send(name + " ::user");
@@ -65,48 +53,58 @@ function send_message() {
 function onOpen() {
     writeToScreen("Connected to " + wsUri);
 }
+function infUser() {
+    alert("aki")
+}
 
 function onMessage(evt) {
     if (evt.data.indexOf("]") != -1) {
         var data = evt.data.replace("[", "").replace("]", "");
         var users = data.split(",");
         var dialog = '';
+        var dialogInf = '';
         var html = '';
         for (var x = 0; x < users.length; x++)
         {
-            console.log(users[x]);
-            dialog += '<div id="dialog' + users[x].toLowerCase().trim() + '" title="Usuario : ' + users[x].trim() + '" >'
-                    + '<div class="panel panel-default" style="width: 370px">'
-                    + '<div class="panel-body" id="painel' + x + '" style="height: 200px;overflow-y: scroll">'
-                    + '</div>'
-                    + '<div class="panel-footer">'
-                    + '<div class="row">'
-                    + '<div class="col-xs-10">'
-                    + '<textarea class="form-control" rows="3" style="resize: none;width: 250px"></textarea>'
-                    + '</div>'
-                    + '<div class="col-xs-2">'
-                    + '<button type="button" class="btn btn-primary btn-lg" style="float: right">Enviar</button>'
-                    + '</div>'
-                    + '</div>'
-                    + '</div>'
-                    + '</div>'
-                    + '</div>';
+            if (users[x] != name) {
+                console.log(users[x]);
+                console.log(name);
+                dialog += '<div id="dialog' + users[x].toLowerCase().trim() + '" title="Usuario : ' + users[x].trim() + '" >'
+                        + '<div class="panel panel-default" style="width: 370px">'
+                        + '<div class="panel-body" id="painel' + x + '" style="height: 200px;overflow-y: scroll">'
+                        + '</div>'
+                        + '<div class="panel-footer">'
+                        + '<div class="row">'
+                        + '<div class="col-xs-10">'
+                        + '<textarea class="form-control" rows="3" style="resize: none;width: 250px"></textarea>'
+                        + '</div>'
+                        + '<div class="col-xs-2">'
+                        + '<button type="button" class="btn btn-primary btn-lg" style="float: right">Enviar</button>'
+                        + '</div>'
+                        + '</div>'
+                        + '</div>'
+                        + '</div>'
+                        + '</div>';
 
-            html += '<p><div class="dropdown">'
-                    + '<a data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user"></span> ' + users[x].trim() + '</a>'
-                    + '<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel" >'
-                    + '<p style="margin-left: 5px"><a href="#" class="conversa" onclick="$(\'#dialog' + users[x].toLowerCase().trim() + '\').dialog(\'open\');$(\'#dialog' + users[x].toLowerCase().trim() + '\').dialog({width: 405});" ><span class="glyphicon glyphicon-phone"></span> Iniciar Conversa</a></p>'
-                    + '<p style="margin-left: 5px"><a href="#"  data-toggle="modal" data-target="#modal-info"><span class="glyphicon glyphicon-info-sign"></span> Informações</a></p>'
-                    + '</ul></div></p>';
+
+                html += '<p><div class="dropdown">'
+                        + '<a data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user"></span> ' + users[x].trim() + '</a>'
+                        + '<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel" >'
+                        + '<p style="margin-left: 5px"><a href="#" class="conversa" onclick="$(\'#dialog' + users[x].toLowerCase().trim() + '\').dialog(\'open\');$(\'#dialog' + users[x].toLowerCase().trim() + '\').dialog({width: 405});" ><span class="glyphicon glyphicon-phone"></span> Iniciar Conversa</a></p>'
+                        + '<p style="margin-left: 5px"><a href="#"  data-toggle="modal" onclick="infUser()" data-target="#modal-info"><span class="glyphicon glyphicon-info-sign"></span> Informações</a></p>'
+                        + '</ul></div></p>';
+
+            }
 
 
         }
         tabs1.innerHTML = html;
         dialogsUser.innerHTML = dialog;
 
+
         for (var x = 0; x < users.length; x++)
         {
-            console.log(users[x]);
+
             $("#dialog" + users[x].toLowerCase().trim()).dialog({autoOpen: false});
         }
     } else {

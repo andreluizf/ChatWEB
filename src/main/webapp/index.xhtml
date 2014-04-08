@@ -64,7 +64,7 @@
                         <div class="form-group">
                             <label for="data">Data Nascimento</label>
                             <input type="date"  class="form-control"   id="textData" />
-                               
+
                         </div>
                         <div class="form-group">
                             <label for="cidade">Cidade</label>
@@ -79,7 +79,7 @@
                     </div>
                     <div class="panel-footer">
                         <button type="button"  onclick="$('#cadastro').dialog('close')" class="btn btn-default">Cancelar</button>
-                         <button  type="button" onclick="join()" class="btn btn-primary"  >Enviar</button>
+                        <button  type="button" onclick="join()" class="btn btn-primary"  >Enviar</button>
 
 
                     </div>
@@ -87,7 +87,46 @@
             </form>
         </div>
 
+        <div id="dialogInf" title="Perfil" >
 
+            <div class="panel panel-default">
+                <div class="panel-body" >
+
+                    <div class="form-group">
+                        <div >Nome</div>
+                        <div id="nome">Nome</div>
+
+                    </div>
+                    <div class="form-group">
+                        <div >Apelido</div>
+                        <div id="apelido">email</div>
+                    </div>
+                    <div class="form-group">
+                        <div >Email</div>
+                        <div id="email">email</div>
+                    </div>
+                    <div class="form-group">
+                        <div >Data Nascimento</div>
+                        <div id="data">data</div>
+
+                    </div>
+                    <div class="form-group">
+                        <div >Cidade</div>
+                        <div id="cidade">cidade</div>
+                    </div>
+                    <div class="form-group">
+                        <div >Frase</div>
+                        <div id="frase">frase</div>
+                    </div>
+
+
+                </div>
+                <div class="panel-footer">
+                    <button type="button"  onclick="$('#dialogInf').dialog('close')" class="btn btn-default">Sair</button>
+                </div>
+            </div>
+
+        </div>
 
         <div class="container" align="left">
             <div class="container " align="right" >
@@ -107,13 +146,19 @@
                 <div id="dialogsUser">
 
                 </div>
+                <div id="dialogsInf">
+
+                </div>
             </div>
         </div>
         <script>
 
             $('document').ready(function() {
                 $("#tabs").tabs();
+                $("#dialogInf").dialog({autoOpen: false});
                 $("#cadastro").dialog({autoOpen: false});
+                $("#dialogInf").dialog("open");
+
             })
 
 
