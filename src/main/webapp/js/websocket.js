@@ -53,8 +53,20 @@ function send_message() {
 function onOpen() {
     writeToScreen("Connected to " + wsUri);
 }
-function infUser() {
+function infUser(nome) {
     alert("aki")
+    $.ajax({
+        type: "POST",
+        url: "./informacao",
+        data: {nome: nome},
+        success: function(data) {
+            alert("sucess");
+            console.log(data);
+        },
+        error: function(data) {
+            alert("data.code");
+        }
+    });
 }
 
 function onMessage(evt) {
@@ -66,7 +78,7 @@ function onMessage(evt) {
         var html = '';
         for (var x = 0; x < users.length; x++)
         {
-            if (users[x] != name) {
+            if (users[x].trim() != name.trim()) {
                 console.log(users[x]);
                 console.log(name);
                 dialog += '<div id="dialog' + users[x].toLowerCase().trim() + '" title="Usuario : ' + users[x].trim() + '" >'

@@ -2,13 +2,13 @@
 
 package br.com.webchat.usuario;
 
-import java.util.Date;
+import java.io.Serializable;
 import javax.faces.bean.ManagedBean;
 import javax.faces.view.ViewScoped;
 
 @ManagedBean
 @ViewScoped
-public class Usuario {
+public class Usuario implements Serializable{
     private String nome;
     private String apelido;
     private String data;
