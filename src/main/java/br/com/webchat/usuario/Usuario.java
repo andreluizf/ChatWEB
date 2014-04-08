@@ -1,20 +1,24 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package br.com.chat.web.controller;
+
+
+package br.com.webchat.usuario;
 
 import java.util.Date;
+import javax.faces.bean.ManagedBean;
+import javax.faces.view.ViewScoped;
 
+@ManagedBean
+@ViewScoped
 public class Usuario {
+    private String nome;
+    private String apelido;
+    private Date data;
+    private String email;
+    private String cidade;
+    private String frase;
 
-    String nome;
-    String apelido;
-    String email;
-    Date data;
-    String cidade;
-    String frase;
+    public Usuario() {
+    }
+     
 
     public String getNome() {
         return nome;
@@ -32,20 +36,20 @@ public class Usuario {
         this.apelido = apelido;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public Date getData() {
         return data;
     }
 
     public void setData(Date data) {
         this.data = data;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getCidade() {
@@ -63,4 +67,12 @@ public class Usuario {
     public void setFrase(String frase) {
         this.frase = frase;
     }
+
+    @Override
+    public String toString() {
+        return "Usuario{" + "nome=" + nome + ", apelido=" + apelido + ", data=" + data + ", email=" + email + ", cidade=" + cidade + ", frase=" + frase + '}';
+    }
+
+   
+    
 }

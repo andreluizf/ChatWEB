@@ -16,10 +16,32 @@
         <!-- Latest compiled and minified JavaScript -->
         <script src="js/bootstrap.min.js"></script>
         <script src="js/jquery-ui-1.10.4.custom.js"></script>
+        <script src="js/websocket.js"></script>
 
     </h:head>
     <h:body>
-        #{controllerChat.usuario.nome}
+        <form action=""> 
+            <table>
+                <tr>
+                    <td>
+                        Users<br/>
+                        <textarea readonly="true" rows="6" cols="20" id="userField"></textarea>
+                    </td>
+                    <td>
+                        Chat Log<br/>
+                        <textarea readonly="true" rows="6" cols="50" id="chatlogField"></textarea> 
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <input id="textField" name="name" value="Duke" type="text"/>
+                        <input onclick="join();" value="Join" type="button"/> 
+                        <input onclick="send_message();" value="Chat" type="button"/> 
+                    </td>
+                </tr>
+            </table>
+
+        </form>
         <!-- diaglo -->
         <div id="cadastro" title="Cadastro de Usuário">
             <h:form >
@@ -28,35 +50,35 @@
 
                         <div class="form-group">
                             <label for="nome">Nome</label>
-                            <h:inputText  class="form-control" value="#{controllerChat.usuario.nome}"  id="nome" />
+                            <h:inputText  class="form-control" value="#{usuario.nome}"  id="textNome" />
 
                         </div>
                         <div class="form-group">
                             <label for="apelido">Apelido</label>
-                            <input type="text" class="form-control" value="#{controllerChat.usuario.apelido}" id="apelido" placeholder="Digite seu apelido"/>
+                            <input type="text" class="form-control" value="#{usuario.apelido}" id="textApelido" placeholder="Digite seu apelido"/>
                         </div>
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input type="text" class="form-control" value="#{controllerChat.usuario.email}" id="email" placeholder="Digite seu email"/>
+                            <input type="text" class="form-control" value="#{usuario.email}" id="textEmail" placeholder="Digite seu email"/>
                         </div>
                         <div class="form-group">
                             <label for="data">Data Nascimento</label>
-                            <input type="date" class="form-control" value="#{controllerChat.usuario.data}" pattern="\d{1,2}/\d{1,2}/\d{4}" id="data" placeholder="Data Nascimento"/>
+                            <input type="date" class="form-control" value="#{usuario.data}" pattern="\d{1,2}/\d{1,2}/\d{4}" id="textData" placeholder="Data Nascimento"/>
                         </div>
                         <div class="form-group">
                             <label for="cidade">Cidade</label>
-                            <input type="text" class="form-control" value="#{controllerChat.usuario.cidade}" id="cidade" placeholder="Cidade"/>
+                            <input type="text" class="form-control" value="#{usuario.cidade}" id="textCidade" placeholder="Cidade"/>
                         </div>
                         <div class="form-group">
                             <label for="frase">Frase</label>
-                            <input type="text" class="form-control" value="#{controllerChat.usuario.frase}" id="frase" placeholder="Digite uma frase"/>
+                            <input type="text" class="form-control" value="#{usuario.frase}" id="textFrase" placeholder="Digite uma frase"/>
                         </div>
 
 
                     </div>
                     <div class="panel-footer">
                         <button type="button"  onclick="$('#cadastro').dialog('close')" class="btn btn-default">Cancelar</button>
-                        <h:commandButton  class="btn btn-primary" value="Enviar" actionListener="#{controllerChat.salvar(controllerChat.usuario)}" style="float: right"/>
+                        <h:commandButton  class="btn btn-primary" value="Enviar" actionListener="#{controllerChat.salvar(usuario)}" style="float: right"/>
 
 
                     </div>
@@ -142,24 +164,22 @@
                     <li><a href="#tabs-1">Usuário</a></li>
                 </ul>
                 <div id="tabs-1">
-                    
-                        <c:forEach id="lista" items="#{controllerChat.chatUser}" var="user"  varStatus="id" >
-                            <p>
-                                <div class="dropdown">
-                                    <a data-toggle="dropdown" href="#"><i class="glyphicon glyphicon-user"/> #{user.getNome()}</a>
-                                    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel" >
-                                        <p style="margin-left: 5px"><a href="#" id="1" class='conversa' ><i class="glyphicon glyphicon-phone"/> Iniciar Conversa</a></p>
-                                        <p style="margin-left: 5px"><a href="#"  data-toggle="modal" data-target="#modal-info"><i class="glyphicon glyphicon-info-sign"/> Informações</a></p>
-                                    </ul>
-                                </div>
-                            </p>
-                        </c:forEach>
+
+                    <p>
+                        <div class="dropdown">
+                            <a data-toggle="dropdown" href="#"><i class="glyphicon glyphicon-user"/> user</a>
+                            <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel" >
+                                <p style="margin-left: 5px"><a href="#" id="1" class='conversa' ><i class="glyphicon glyphicon-phone"/> Iniciar Conversa</a></p>
+                                <p style="margin-left: 5px"><a href="#"  data-toggle="modal" data-target="#modal-info"><i class="glyphicon glyphicon-info-sign"/> Informações</a></p>
+                            </ul>
+                        </div>
+                    </p>
                 </div>
 
             </div>
         </div>
         <script>
-           
+
             $('document').ready(function() {
                 $("#tabs").tabs();
                 $("#cadastro").dialog({autoOpen: false});
