@@ -4,6 +4,7 @@
         <param-name>javax.faces.PROJECT_STAGE</param-name>
         <param-value>Development</param-value>
     </context-param>
+  
     <servlet>
         <display-name>Chat</display-name>
         <servlet-name>Chat</servlet-name>

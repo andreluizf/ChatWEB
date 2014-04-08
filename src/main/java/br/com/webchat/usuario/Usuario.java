@@ -11,12 +11,21 @@ import javax.faces.view.ViewScoped;
 public class Usuario {
     private String nome;
     private String apelido;
-    private Date data;
+    private String data;
     private String email;
     private String cidade;
     private String frase;
 
     public Usuario() {
+    }
+
+    public Usuario(String nome, String apelido, String data, String email, String cidade, String frase) {
+        this.nome = nome;
+        this.apelido = apelido;
+        this.data = data;
+        this.email = email;
+        this.cidade = cidade;
+        this.frase = frase;
     }
      
 
@@ -36,11 +45,11 @@ public class Usuario {
         this.apelido = apelido;
     }
 
-    public Date getData() {
+    public String getData() {
         return data;
     }
 
-    public void setData(Date data) {
+    public void setData(String data) {
         this.data = data;
     }
 

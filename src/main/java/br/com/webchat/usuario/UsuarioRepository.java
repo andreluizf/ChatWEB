@@ -1,16 +1,22 @@
-
 package br.com.webchat.usuario;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import javax.ejb.Stateless;
 
-
+@Stateless
 public class UsuarioRepository {
-    static ArrayList<Usuario> list = new ArrayList<>();
-  
-  public UsuarioRepository() {
-  }
-  
-  public void add(Usuario p)  {
-    list.add(p);
-  }
+
+    static Map<String, Usuario> lists = new HashMap<String, Usuario>();
+
+    public UsuarioRepository() {
+    }
+
+    public Usuario findUser(String nome) {
+        return lists.get(nome);
+    }
+
+    public void add(Usuario p) {
+        lists.put(p.getNome(), p);
+    }
 }

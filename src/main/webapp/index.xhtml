@@ -44,113 +44,50 @@
         </form>
         <!-- diaglo -->
         <div id="cadastro" title="Cadastro de Usuário">
-            <h:form >
+            <form method="POST" action="/ChatWeb" > 
                 <div class="panel panel-default">
                     <div class="panel-body" >
 
                         <div class="form-group">
                             <label for="nome">Nome</label>
-                            <h:inputText  class="form-control" value="#{usuario.nome}"  id="textNome" />
+                            <input type="text"  class="form-control"      id="textNome" />
 
                         </div>
                         <div class="form-group">
                             <label for="apelido">Apelido</label>
-                            <input type="text" class="form-control" value="#{usuario.apelido}" id="textApelido" placeholder="Digite seu apelido"/>
+                            <input type="text" class="form-control"  id="textApelido"/>
                         </div>
                         <div class="form-group">
                             <label for="email">Email</label>
-                            <input type="text" class="form-control" value="#{usuario.email}" id="textEmail" placeholder="Digite seu email"/>
+                            <input type="text" class="form-control"  id="textEmail"/>
                         </div>
                         <div class="form-group">
                             <label for="data">Data Nascimento</label>
-                            <input type="date" class="form-control" value="#{usuario.data}" pattern="\d{1,2}/\d{1,2}/\d{4}" id="textData" placeholder="Data Nascimento"/>
+                            <input type="date"  class="form-control"   id="textData" />
+                               
                         </div>
                         <div class="form-group">
                             <label for="cidade">Cidade</label>
-                            <input type="text" class="form-control" value="#{usuario.cidade}" id="textCidade" placeholder="Cidade"/>
+                            <input type="text"  class="form-control"  id="textCidade" />
                         </div>
                         <div class="form-group">
                             <label for="frase">Frase</label>
-                            <input type="text" class="form-control" value="#{usuario.frase}" id="textFrase" placeholder="Digite uma frase"/>
+                            <input type="text" class="form-control"  id="textFrase" />
                         </div>
 
 
                     </div>
                     <div class="panel-footer">
                         <button type="button"  onclick="$('#cadastro').dialog('close')" class="btn btn-default">Cancelar</button>
-                        <h:commandButton  class="btn btn-primary" value="Enviar" actionListener="#{controllerChat.salvar(usuario)}" style="float: right"/>
+                         <button  type="button" onclick="join()" class="btn btn-primary"  >Enviar</button>
 
 
                     </div>
                 </div>
-            </h:form>
+            </form>
         </div>
-        <!-- diaglo -->
-        <div id="dialog1" title="Usuario1">
-            <div class="panel panel-default" style="width: 370px">
-                <div class="panel-body" style="height: 200px;overflow-y: scroll">
-                    Panel content goes here..
-                    dd
-                    d<br/>
-                    d<br/>
-                    d<br/>
-                    d<br/>
-                    d<br/>
-                    d<br/>
-                    Panel content goes here..
-                    dd
-                    d<br/>
-                    d<br/>
-                    d<br/>
-                    d<br/>
-                    d<br/>
-                    d<br/>
-                </div>
-                <div class="panel-footer">
-                    <div class="row">
-                        <div class="col-xs-10">
-                            <textarea class="form-control" rows="3" style="resize: none;width: 250px"></textarea>
-                        </div>
-                        <div class="col-xs-2">
-                            <button type="button" class="btn btn-primary btn-lg" style="float: right">Enviar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- diaglo -->
-        <div id="dialog2" title="usuario 2" >
-            <div class="panel panel-default" style="width: 370px">
-                <div class="panel-body" style="height: 200px;overflow-y: scroll">
-                    Panel content goes here..
-                    dd
-                    d<br/>
-                    d<br/>
-                    d<br/>
-                    d<br/>
-                    d<br/>
-                    d<br/>
-                    Panel content goes here..
-                    dd
-                    d<br/>
-                    d<br/>
-                    d<br/>
-                    d<br/>
-                    d<br/>
-                    d<br/>
-                </div>
-                <div class="panel-footer">
-                    <div class="row">
-                        <div class="col-xs-10">
-                            <textarea class="form-control" rows="3" style="resize: none;width: 250px"></textarea>
-                        </div>
-                        <div class="col-xs-2">
-                            <button type="button" class="btn btn-primary btn-lg" style="float: right">Enviar</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+
+
 
         <div class="container" align="left">
             <div class="container " align="right" >
@@ -166,7 +103,10 @@
                 <div id="tabs1">
 
                 </div>
+                <!-- diaglo -->
+                <div id="dialogsUser">
 
+                </div>
             </div>
         </div>
         <script>
@@ -174,14 +114,6 @@
             $('document').ready(function() {
                 $("#tabs").tabs();
                 $("#cadastro").dialog({autoOpen: false});
-                $("#dialog1").dialog({autoOpen: false});
-                $("#dialog2").dialog({autoOpen: false});
-                $(".conversa").click(function() {
-                    id = $(this).attr("id");
-
-                    $("#dialog" + id).dialog({width: 405});
-                    $("#dialog" + id).dialog("open");
-                });
             })
 
 

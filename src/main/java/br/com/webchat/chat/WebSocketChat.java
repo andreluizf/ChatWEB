@@ -1,12 +1,11 @@
 package br.com.webchat.chat;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import javax.ejb.Singleton;
 import javax.websocket.EncodeException;
 import javax.websocket.OnClose;
 import javax.websocket.OnMessage;
@@ -15,30 +14,36 @@ import javax.websocket.Session;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 
-@ServerEndpoint("/chat")
+@ServerEndpoint("/chat/{user}")
 public class WebSocketChat {
 
-    private static final Set<Session> peers
-            = Collections.synchronizedSet(new HashSet<Session>());
+    private static final Map<String, Session> peers
+            = Collections.synchronizedMap(new HashMap<String, Session>());
 
     @OnOpen
-    public void onOpen(Session peer) {
-        peers.add(peer);
+    public void onOpen(Session peer, @PathParam("user") String userName) {
+        peers.put(userName, peer);
     }
 
     @OnClose
-    public void onClose(Session peer) {
-        peers.remove(peer);
+    public void onClose(Session peer, @PathParam("user") String userName) {
+        peers.remove(userName);
     }
 
     @OnMessage
-    public void message(String message, Session client)
+    public void message(String message, Session client, @PathParam("user") String userName)
             throws IOException, EncodeException {
-        System.out.println("Message Received: " + client.getOpenSessions().toString());
+        int i = 0;
 
         if (message.contains(" ::user")) {
             for (Session peer : client.getOpenSessions()) {
-                peer.getBasicRemote().sendText(message);
+                List users = new ArrayList();
+                for (Map.Entry<String, Session> entry : peers.entrySet()) {
+                    String user = entry.getKey();
+                    users.add(user);
+                }
+                peer.getBasicRemote().sendObject(users);
+
             }
         } else {
             for (Session peer : client.getOpenSessions()) {
