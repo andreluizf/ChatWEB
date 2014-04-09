@@ -32,7 +32,7 @@ function join() {
         url: "./cadastro",
         data: {nome: textNome.value, apelido: textApelido.value, email: textEmail.value, cidade: textCidade.value, data: textData.value, frase: textFrase.value},
         success: function(data) {
-            titulo.innerHTML = "<div style='border-radius:50%;-moz-border-radius:50%;-webkit-border-radius:50%;'></div>"+name + " esta online! </br> " + frase;
+            titulo.innerHTML = "<div style='border-radius:50%;-moz-border-radius:50%;-webkit-border-radius:50%;'></div>" + name + " esta online! </br> " + frase;
         },
         error: function(data) {
             alert("data.code");
@@ -47,7 +47,10 @@ function join() {
 }
 
 function send_message() {
-    websocket.send(name + ": " + textField.value);
+
+    console.log(name);
+    var data = new Date();
+    websocket.send(data.toLocaleString() + " " + name + ": " + textField.value);
 }
 
 function onOpen() {
@@ -86,13 +89,11 @@ function onMessage(evt) {
         for (var x = 0; x < users.length; x++)
         {
             if (users[x].trim() != name.trim()) {
-                console.log(users[x]);
-                console.log(name);
-                dialog += '<div id="dialog' + users[x].toLowerCase().trim().replace(" ","_") + '"  title="Chat - '+users[x]+'" >'
+                dialog += '<div id="dialog' + users[x].toLowerCase().trim().replace(" ", "_") + '"  title="Chat - ' + users[x] + '" >'
                         + '<div class="panel panel-default" style="width: 370px">'
                         + '<div class="panel-heading">'
                         + '<a href="#"  data-toggle="modal" onclick="infUser(\'' + users[x].trim() + '\')" data-target="#modal-info"><span class="glyphicon glyphicon-info-sign"></span> Informações</a>'
-                        +'</div>'
+                        + '</div>'
                         + '<div class="panel-body" id="painel' + x + '" style="height: 200px;overflow-y: scroll">'
                         + '</div>'
                         + '<div class="panel-footer">'
@@ -101,7 +102,8 @@ function onMessage(evt) {
                         + '<textarea class="form-control" rows="3" style="resize: none;width: 250px"></textarea>'
                         + '</div>'
                         + '<div class="col-xs-2">'
-                        + '<button type="button" class="btn btn-primary btn-lg" style="float: right">Enviar</button>'
+                        + '<p><button type="button" class="btn btn-primary btn-lg" onclick="infUser(\'' + users[x].trim() + '\')" style="float: right">Enviar</button></p>'
+                        + '<p><button type="button" class="btn btn-default btn-lg" onclick="$(\'#dialog' + users[x].toLowerCase().trim().replace(" ", "_") + '\').dialog(\'close\')" style="float: right;margin-top: 5px;width: 78px;">Sair</button></p>'
                         + '</div>'
                         + '</div>'
                         + '</div>'
@@ -112,7 +114,7 @@ function onMessage(evt) {
                 html += '<p><div class="dropdown">'
                         + '<a data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user"></span> ' + users[x].trim() + '</a>'
                         + '<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel" >'
-                        + '<p style="margin-left: 5px"><a href="#" class="conversa" onclick="$(\'#dialog' + users[x].toLowerCase().trim().replace(" ","_") + '\').dialog(\'open\');$(\'#dialog' + users[x].toLowerCase().trim().replace(" ","_") + '\').dialog({width: 405});" ><span class="glyphicon glyphicon-phone"></span> Iniciar Conversa</a></p>'
+                        + '<p style="margin-left: 5px"><a href="#" class="conversa" onclick="$(\'#dialog' + users[x].toLowerCase().trim().replace(" ", "_") + '\').dialog(\'open\');$(\'#dialog' + users[x].toLowerCase().trim().replace(" ", "_") + '\').dialog({width: 405});" ><span class="glyphicon glyphicon-phone"></span> Iniciar Conversa</a></p>'
                         + '<p style="margin-left: 5px"><a href="#"  data-toggle="modal" onclick="infUser(\'' + users[x].trim() + '\')" data-target="#modal-info"><span class="glyphicon glyphicon-info-sign"></span> Informações</a></p>'
                         + '</ul></div></p>';
 
@@ -120,9 +122,9 @@ function onMessage(evt) {
 
 
         }
-        tabs1.innerHTML = html;
+        userTab.innerHTML = html;
         dialogsUser.innerHTML = dialog;
-
+        historico.innerHTML = html;
 
         for (var x = 0; x < users.length; x++)
         {

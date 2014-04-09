@@ -34,7 +34,7 @@ public class WebSocketChat {
     public void message(String message, Session client, @PathParam("user") String userName)
             throws IOException, EncodeException {
         int i = 0;
-
+        System.out.println("Message:: "+ message);
         if (message.contains(" ::user")) {
             for (Session peer : client.getOpenSessions()) {
                 List users = new ArrayList();

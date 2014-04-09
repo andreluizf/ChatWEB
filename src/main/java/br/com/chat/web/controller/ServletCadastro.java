@@ -5,8 +5,8 @@
  */
 package br.com.chat.web.controller;
 
-import br.com.webchat.usuario.Usuario;
-import br.com.webchat.usuario.UsuarioRepository;
+import br.com.webchat.repository.Usuario;
+import br.com.webchat.repository.UsuarioRepository;
 import java.io.IOException;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;

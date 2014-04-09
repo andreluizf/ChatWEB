@@ -1,6 +1,6 @@
 
 
-package br.com.webchat.usuario;
+package br.com.webchat.repository;
 
 import java.io.Serializable;
 import javax.faces.bean.ManagedBean;

@@ -1,7 +1,7 @@
 package br.com.chat.web.controller;
 
-import br.com.webchat.usuario.Usuario;
-import br.com.webchat.usuario.UsuarioRepository;
+import br.com.webchat.repository.Usuario;
+import br.com.webchat.repository.UsuarioRepository;
 import com.google.gson.Gson;
 import java.io.IOException;
 import javax.ejb.EJB;

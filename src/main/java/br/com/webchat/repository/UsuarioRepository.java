@@ -1,4 +1,4 @@
-package br.com.webchat.usuario;
+package br.com.webchat.repository;
 
 import java.util.HashMap;
 import java.util.Map;
