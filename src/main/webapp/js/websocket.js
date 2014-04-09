@@ -7,6 +7,14 @@ var cidade;
 var frase;
 var output;
 var wsUri;
+
+function replaceAll(string, token, newtoken) {
+    while (string.indexOf(token) != -1) {
+        string = string.replace(token, newtoken);
+    }
+    return string;
+
+}
 function init(user) {
     wsUri = "ws://" + document.location.host + document.location.pathname + "chat/" + user;
     console.log(wsUri);
@@ -46,11 +54,14 @@ function join() {
 
 }
 
-function send_message() {
-
-    console.log(name);
+function send_message(to) {
+    var msg = $('#fieldText' + replaceAll(to, " ", "_")).val();
     var data = new Date();
-    websocket.send(data.toLocaleString() + " " + name + ": " + textField.value);
+    var dd = data.getDate();
+    var mm = data.getMonth() + 1;
+    var yyyy = data.getFullYear();
+    var dataHora=dd+"/"+mm+"/"+yyyy+ " " +data.toLocaleTimeString();
+    websocket.send(dataHora + " || " + name + " >> " + msg + ' to:: ' + to);
 }
 
 function onOpen() {
@@ -88,22 +99,24 @@ function onMessage(evt) {
         var html = '';
         for (var x = 0; x < users.length; x++)
         {
+            var usuarioId = replaceAll(users[x].toLowerCase().trim(), " ", "_");
+            console.log(usuarioId);
             if (users[x].trim() != name.trim()) {
-                dialog += '<div id="dialog' + users[x].toLowerCase().trim().replace(" ", "_") + '"  title="Chat - ' + users[x] + '" >'
+                dialog += '<div id="dialog' + usuarioId + '"  title="Chat - ' + users[x] + '" >'
                         + '<div class="panel panel-default" style="width: 370px">'
                         + '<div class="panel-heading">'
                         + '<a href="#"  data-toggle="modal" onclick="infUser(\'' + users[x].trim() + '\')" data-target="#modal-info"><span class="glyphicon glyphicon-info-sign"></span> Informações</a>'
                         + '</div>'
-                        + '<div class="panel-body" id="painel' + x + '" style="height: 200px;overflow-y: scroll">'
+                        + '<div class="panel-body" id="painel' + usuarioId + '" style="height: 200px;overflow-y: scroll">'
                         + '</div>'
                         + '<div class="panel-footer">'
                         + '<div class="row">'
                         + '<div class="col-xs-10">'
-                        + '<textarea class="form-control" rows="3" style="resize: none;width: 250px"></textarea>'
+                        + '<textarea class="form-control" rows="3" id="fieldText' + usuarioId + '" style="resize: none;width: 250px"></textarea>'
                         + '</div>'
                         + '<div class="col-xs-2">'
-                        + '<p><button type="button" class="btn btn-primary btn-lg" onclick="infUser(\'' + users[x].trim() + '\')" style="float: right">Enviar</button></p>'
-                        + '<p><button type="button" class="btn btn-default btn-lg" onclick="$(\'#dialog' + users[x].toLowerCase().trim().replace(" ", "_") + '\').dialog(\'close\')" style="float: right;margin-top: 5px;width: 78px;">Sair</button></p>'
+                        + '<p><button type="button" class="btn btn-primary btn-lg" onclick="send_message(\'' + users[x].trim() + '\')" style="float: right">Enviar</button></p>'
+                        + '<p><button type="button" class="btn btn-default btn-lg" onclick="$(\'#dialog' + usuarioId + '\').dialog(\'close\')" style="float: right;margin-top: 5px;width: 78px;">Sair</button></p>'
                         + '</div>'
                         + '</div>'
                         + '</div>'
@@ -114,7 +127,7 @@ function onMessage(evt) {
                 html += '<p><div class="dropdown">'
                         + '<a data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user"></span> ' + users[x].trim() + '</a>'
                         + '<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel" >'
-                        + '<p style="margin-left: 5px"><a href="#" class="conversa" onclick="$(\'#dialog' + users[x].toLowerCase().trim().replace(" ", "_") + '\').dialog(\'open\');$(\'#dialog' + users[x].toLowerCase().trim().replace(" ", "_") + '\').dialog({width: 405});" ><span class="glyphicon glyphicon-phone"></span> Iniciar Conversa</a></p>'
+                        + '<p style="margin-left: 5px"><a href="#" class="conversa" onclick="$(\'#dialog' + usuarioId + '\').dialog(\'open\');$(\'#dialog' + usuarioId + '\').dialog({width: 405});" ><span class="glyphicon glyphicon-phone"></span> Iniciar Conversa</a></p>'
                         + '<p style="margin-left: 5px"><a href="#"  data-toggle="modal" onclick="infUser(\'' + users[x].trim() + '\')" data-target="#modal-info"><span class="glyphicon glyphicon-info-sign"></span> Informações</a></p>'
                         + '</ul></div></p>';
 
@@ -128,11 +141,34 @@ function onMessage(evt) {
 
         for (var x = 0; x < users.length; x++)
         {
-
-            $("#dialog" + users[x].toLowerCase().trim()).dialog({autoOpen: false});
+            var usuarioId = replaceAll(users[x].toLowerCase().trim(), " ", "_");
+            $("#dialog" + usuarioId).dialog({autoOpen: false});
         }
     } else {
-        chatlogField.innerHTML += evt.data + "\n";
+        console.log(evt.data);
+        var msg = evt.data.split("to::")
+        var dds = msg[0].split(">>")[1];
+        console.log(dds);
+        var nameID = replaceAll(name.trim(), " ", "_");
+        var from = evt.data.split("||")[1].split(">>")[0].trim();
+        var to = replaceAll(msg[1].trim(), " ", "_");
+        console.log(from);
+        console.log(to);
+        console.log(nameID);
+        if (to == name.trim()) {
+            $("#dialog" + from).dialog("open");
+            $('#dialog' + from).dialog({width: 405});
+            var historicoMsg = $('#painel' + from).html();
+            console.log(historicoMsg);
+            $('#painel' + from).html(historicoMsg + "<p>"+msg[0].split(">>")[0]+"<strong>" +from+"</strong>"+ dds + "</p>");
+        }
+        if (from == name.trim()) {
+            var historicoMsg = $('#painel' + to).html();
+            $('#painel' + to).html(historicoMsg +"<p>"+msg[0].split(">>")[0]+"<strong>" +from+"</strong>"+ dds + "</p>");
+        }
+
+
+
     }
 }
 
