@@ -25,10 +25,12 @@ public class ServletInfo extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String nome = req.getParameter("nome");
-        Usuario user = repository.findUser(nome);
+        Usuario user = new Usuario();
+        user = repository.findUser(nome);
+        System.out.println(nome);
         String json = new Gson().toJson(user);
         System.out.println(" ================ aki ================ ");
-
+        System.out.println(json);
         resp.setContentType("application/json");
         resp.setCharacterEncoding("UTF-8");
         resp.getWriter().write(json);

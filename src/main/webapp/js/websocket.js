@@ -24,7 +24,7 @@ function init(user) {
     output = document.getElementById("output");
 }
 function join() {
-//    username = textField.value;
+    frase = textFrase.value;
 
     name = textNome.value;
     $.ajax({
@@ -32,7 +32,7 @@ function join() {
         url: "./cadastro",
         data: {nome: textNome.value, apelido: textApelido.value, email: textEmail.value, cidade: textCidade.value, data: textData.value, frase: textFrase.value},
         success: function(data) {
-            alert("sucess");
+            titulo.innerHTML = "<div style='border-radius:50%;-moz-border-radius:50%;-webkit-border-radius:50%;'></div>"+name + " esta online! </br> " + frase;
         },
         error: function(data) {
             alert("data.code");
@@ -53,15 +53,22 @@ function send_message() {
 function onOpen() {
     writeToScreen("Connected to " + wsUri);
 }
-function infUser(nome) {
-    alert("aki")
+function infUser(name) {
+
     $.ajax({
         type: "POST",
         url: "./informacao",
-        data: {nome: nome},
-        success: function(data) {
-            alert("sucess");
-            console.log(data);
+        data: {nome: name},
+        success: function(result) {
+            $("#dialogInf").dialog("open");
+            console.log(result);
+            infNome.innerHTML = result['nome'];
+            infApelido.innerHTML = result['apelido'];
+            infCidade.innerHTML = result['cidade'];
+            infData.innerHTML = result['data'];
+            infFrase.innerHTML = result['frase'];
+            infEmail.innerHTML = result['email'];
+
         },
         error: function(data) {
             alert("data.code");
@@ -81,8 +88,11 @@ function onMessage(evt) {
             if (users[x].trim() != name.trim()) {
                 console.log(users[x]);
                 console.log(name);
-                dialog += '<div id="dialog' + users[x].toLowerCase().trim() + '" title="Usuario : ' + users[x].trim() + '" >'
+                dialog += '<div id="dialog' + users[x].toLowerCase().trim().replace(" ","_") + '"  title="Chat - '+users[x]+'" >'
                         + '<div class="panel panel-default" style="width: 370px">'
+                        + '<div class="panel-heading">'
+                        + '<a href="#"  data-toggle="modal" onclick="infUser(\'' + users[x].trim() + '\')" data-target="#modal-info"><span class="glyphicon glyphicon-info-sign"></span> Informações</a>'
+                        +'</div>'
                         + '<div class="panel-body" id="painel' + x + '" style="height: 200px;overflow-y: scroll">'
                         + '</div>'
                         + '<div class="panel-footer">'
@@ -102,8 +112,8 @@ function onMessage(evt) {
                 html += '<p><div class="dropdown">'
                         + '<a data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-user"></span> ' + users[x].trim() + '</a>'
                         + '<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel" >'
-                        + '<p style="margin-left: 5px"><a href="#" class="conversa" onclick="$(\'#dialog' + users[x].toLowerCase().trim() + '\').dialog(\'open\');$(\'#dialog' + users[x].toLowerCase().trim() + '\').dialog({width: 405});" ><span class="glyphicon glyphicon-phone"></span> Iniciar Conversa</a></p>'
-                        + '<p style="margin-left: 5px"><a href="#"  data-toggle="modal" onclick="infUser()" data-target="#modal-info"><span class="glyphicon glyphicon-info-sign"></span> Informações</a></p>'
+                        + '<p style="margin-left: 5px"><a href="#" class="conversa" onclick="$(\'#dialog' + users[x].toLowerCase().trim().replace(" ","_") + '\').dialog(\'open\');$(\'#dialog' + users[x].toLowerCase().trim().replace(" ","_") + '\').dialog({width: 405});" ><span class="glyphicon glyphicon-phone"></span> Iniciar Conversa</a></p>'
+                        + '<p style="margin-left: 5px"><a href="#"  data-toggle="modal" onclick="infUser(\'' + users[x].trim() + '\')" data-target="#modal-info"><span class="glyphicon glyphicon-info-sign"></span> Informações</a></p>'
                         + '</ul></div></p>';
 
             }

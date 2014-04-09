@@ -13,6 +13,8 @@ public class UsuarioRepository {
     }
 
     public Usuario findUser(String nome) {
+         System.out.println(nome);
+      
         return lists.get(nome);
     }
 

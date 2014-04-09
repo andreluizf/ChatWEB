@@ -79,7 +79,8 @@
                     </div>
                     <div class="panel-footer">
                         <button type="button"  onclick="$('#cadastro').dialog('close')" class="btn btn-default">Cancelar</button>
-                        <button  type="button" onclick="join()" class="btn btn-primary"  >Enviar</button>
+                        <button  type="button" onclick="join();
+                                $('#cadastro').dialog('close')" class="btn btn-primary"  >Enviar</button>
 
 
                     </div>
@@ -93,30 +94,29 @@
                 <div class="panel-body" >
 
                     <div class="form-group">
-                        <div >Nome</div>
-                        <div id="nome">Nome</div>
+                        <div >Nome: <span id="infNome"></span></div>
+
 
                     </div>
                     <div class="form-group">
-                        <div >Apelido</div>
-                        <div id="apelido">email</div>
-                    </div>
-                    <div class="form-group">
-                        <div >Email</div>
-                        <div id="email">email</div>
-                    </div>
-                    <div class="form-group">
-                        <div >Data Nascimento</div>
-                        <div id="data">data</div>
+                        <div >Apelido: <span id="infApelido"></span></div>
 
                     </div>
                     <div class="form-group">
-                        <div >Cidade</div>
-                        <div id="cidade">cidade</div>
+                        <div >Email:   <span id="infEmail" > </span>
+                        </div>
                     </div>
                     <div class="form-group">
-                        <div >Frase</div>
-                        <div id="frase">frase</div>
+                        <div >Data Nascimento :<span id="infData"></span></div>
+
+
+                    </div>
+                    <div class="form-group">
+                        <div >Cidade:<span id="infCidade"></span></div>
+                    </div>
+                    <div class="form-group">
+                        <div >Frase: <span id="infFrase"></span></div>
+
                     </div>
 
 
@@ -137,7 +137,7 @@
             <div id="tabs">
 
                 <ul>
-                    <li><a href="#tabs1">Usuário</a></li>
+                    <li><a href="#tabs1" id="titulo" >Usuário</a></li>
                 </ul>
                 <div id="tabs1">
 
@@ -157,7 +157,7 @@
                 $("#tabs").tabs();
                 $("#dialogInf").dialog({autoOpen: false});
                 $("#cadastro").dialog({autoOpen: false});
-                $("#dialogInf").dialog("open");
+
 
             })
 
