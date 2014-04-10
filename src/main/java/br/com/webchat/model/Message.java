@@ -28,10 +28,10 @@ public class Message implements Serializable {
     private String message;
     @JoinColumn(name = "to_user", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
-    private User toUser;
+    private Usuario toUser;
     @JoinColumn(name = "from_user", referencedColumnName = "id")
     @ManyToOne(fetch = FetchType.LAZY)
-    private User fromUser;
+    private Usuario fromUser;
 
     public Message() {
     }
@@ -56,19 +56,19 @@ public class Message implements Serializable {
         this.message = message;
     }
 
-    public User getToUser() {
+    public Usuario getToUser() {
         return toUser;
     }
 
-    public void setToUser(User toUser) {
+    public void setToUser(Usuario toUser) {
         this.toUser = toUser;
     }
 
-    public User getFromUser() {
+    public Usuario getFromUser() {
         return fromUser;
     }
 
-    public void setFromUser(User fromUser) {
+    public void setFromUser(Usuario fromUser) {
         this.fromUser = fromUser;
     }
 

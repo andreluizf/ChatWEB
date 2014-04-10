@@ -40,7 +40,13 @@ function join() {
         url: "./cadastro",
         data: {nome: textNome.value, apelido: textApelido.value, email: textEmail.value, cidade: textCidade.value, data: textData.value, frase: textFrase.value},
         success: function(data) {
-            titulo.innerHTML = "<div style='border-radius:50%;-moz-border-radius:50%;-webkit-border-radius:50%;'></div>" + name + " esta online! </br> " + frase;
+            if (data=='200'){
+                titulo.innerHTML = "<div style='border-radius:50%;-moz-border-radius:50%;-webkit-border-radius:50%;'></div>" + name + " esta online! </br> " + frase;
+                $('#tabs').show();
+                $('#bt-cadastro').hide();
+            }else{
+                  $("#dialogAviso").dialog("open");
+            }
         },
         error: function(data) {
             alert("data.code");
@@ -60,8 +66,9 @@ function send_message(to) {
     var dd = data.getDate();
     var mm = data.getMonth() + 1;
     var yyyy = data.getFullYear();
-    var dataHora=dd+"/"+mm+"/"+yyyy+ " " +data.toLocaleTimeString();
+    var dataHora = dd + "/" + mm + "/" + yyyy + " " + data.toLocaleTimeString();
     websocket.send(dataHora + " || " + name + " >> " + msg + ' to:: ' + to);
+    $('#fieldText' + replaceAll(to, " ", "_")).val("");
 }
 
 function onOpen() {
@@ -75,7 +82,6 @@ function infUser(name) {
         data: {nome: name},
         success: function(result) {
             $("#dialogInf").dialog("open");
-            console.log(result);
             infNome.innerHTML = result['nome'];
             infApelido.innerHTML = result['apelido'];
             infCidade.innerHTML = result['cidade'];
@@ -145,26 +151,22 @@ function onMessage(evt) {
             $("#dialog" + usuarioId).dialog({autoOpen: false});
         }
     } else {
-        console.log(evt.data);
         var msg = evt.data.split("to::")
         var dds = msg[0].split(">>")[1];
-        console.log(dds);
         var nameID = replaceAll(name.trim(), " ", "_");
         var from = evt.data.split("||")[1].split(">>")[0].trim();
         var to = replaceAll(msg[1].trim(), " ", "_");
-        console.log(from);
-        console.log(to);
-        console.log(nameID);
         if (to == name.trim()) {
             $("#dialog" + from).dialog("open");
             $('#dialog' + from).dialog({width: 405});
+            var dataHora = msg[0].split("||")[0];
             var historicoMsg = $('#painel' + from).html();
-            console.log(historicoMsg);
-            $('#painel' + from).html(historicoMsg + "<p>"+msg[0].split(">>")[0]+"<strong>" +from+"</strong>"+ dds + "</p>");
+            $('#painel' + from).html(historicoMsg + "<p>" + dataHora + "- <strong>" + from.toUpperCase() + " : </strong>" + dds + "</p>");
         }
         if (from == name.trim()) {
             var historicoMsg = $('#painel' + to).html();
-            $('#painel' + to).html(historicoMsg +"<p>"+msg[0].split(">>")[0]+"<strong>" +from+"</strong>"+ dds + "</p>");
+             var dataHora = msg[0].split("||")[0];
+            $('#painel' + to).html(historicoMsg + "<p>" + dataHora + " - <strong>" + from.toUpperCase() + " : </strong>" + dds + "</p>");
         }
 
 

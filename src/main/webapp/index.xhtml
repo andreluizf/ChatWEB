@@ -41,7 +41,7 @@
                         </div>
                         <div class="form-group">
                             <label for="data">Data Nascimento</label>
-                            <input type="date"  class="form-control"   id="textData" />
+                            <input type="text"  class="form-control"   id="textData" />
 
                         </div>
                         <div class="form-group">
@@ -65,7 +65,13 @@
                 </div>
             </form>
         </div>
-
+        <!-- dialog aviso -->
+        <div id="dialogAviso" title="Aviso" >
+            <div class="alert alert-danger">Existe outro usuário ja conectado com este nome.</div>
+            <div class="alert alert-danger">Se cadastre com um outro nome para entrar.</div>
+            <button type="button"  onclick="$('#dialogAviso').dialog('close')" class="btn btn-default" style="float: right">OK</button>
+        </div>
+        <!-- dialog informações -->
         <div id="dialogInf" title="Perfil" >
 
             <div class="panel panel-default">
@@ -108,11 +114,11 @@
 
         <div class="container" align="left">
             <div class="container " align="right" >
-                <button type="button" class="btn btn-primary btn-lg" onclick="$('#cadastro').dialog('open');">
+                <button type="button" id='bt-cadastro' class="btn btn-primary btn-lg" onclick="$('#cadastro').dialog('open');">
                     <span class="glyphicon glyphicon-inbox"></span> Cadastro
                 </button>
             </div>
-            <div id="tabs">
+            <div id="tabs" style="display:none">
 
                 <ul>
                     <li><a href="#tabs1" id="titulo" >Usuário</a></li>
@@ -142,6 +148,19 @@
 
             $('document').ready(function() {
                 $("#tabs").tabs();
+                $("#textData").datepicker({
+                    changeMonth: true,
+                    changeYear: true,
+                    dateFormat: 'dd/mm/yy',
+                    dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
+                    dayNamesMin: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S', 'D'],
+                    dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb', 'Dom'],
+                    monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
+                    monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
+                    nextText: 'Próximo',
+                    prevText: 'Anterior'
+                });
+                $("#dialogAviso").dialog({autoOpen: false});
                 $("#dialogInf").dialog({autoOpen: false});
                 $("#cadastro").dialog({autoOpen: false});
 

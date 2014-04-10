@@ -1,24 +1,22 @@
 package br.com.webchat.repository;
 
+import br.com.webchat.model.Usuario;
 import java.util.HashMap;
 import java.util.Map;
-import javax.ejb.Stateless;
 
-@Stateless
+
 public class UsuarioRepository {
 
-    static Map<String, Usuario> lists = new HashMap<String, Usuario>();
+    private static Map<String, Usuario> lists = new HashMap<>();
 
     public UsuarioRepository() {
     }
 
-    public Usuario findUser(String nome) {
-         System.out.println(nome);
-      
+    public static Usuario findUser(String nome) {
         return lists.get(nome);
     }
 
-    public void add(Usuario p) {
+    public static void add(Usuario p) {
         lists.put(p.getNome(), p);
     }
 }

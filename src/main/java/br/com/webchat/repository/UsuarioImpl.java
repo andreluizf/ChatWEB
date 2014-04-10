@@ -6,9 +6,9 @@
 
 package br.com.webchat.repository;
 
-import br.com.webchat.model.User;
+import br.com.webchat.model.Usuario;
 import java.util.List;
-import javax.ejb.Local;
+import javax.ejb.Remote;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionManagement;
 import javax.ejb.TransactionManagementType;
@@ -16,30 +16,30 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 @Stateless(name = "UsuarioImpl", mappedName = "ejb/UsuarioImpl")
-@Local
+@Remote(Repository.class)
 @TransactionManagement(TransactionManagementType.CONTAINER)
-public class UsuarioImpl implements Repository<User>{
+public class UsuarioImpl implements Repository<Usuario>{
     @PersistenceContext(unitName = "webChat")
     EntityManager em;
   
     @Override
-    public void saveOrUpdate(User modelo) {
+    public void saveOrUpdate(Usuario modelo) {
+        em.persist(modelo);
+    }
+
+    @Override
+    public void delete(Usuario modelo) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public void delete(User modelo) {
+    public List<Usuario> findAll() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public List<User> findAll() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public User findByApelido(String apelido) {
-       return (User) em.createQuery("select c from User c where c.apelido= :apelido",User.class).setParameter("apelido", apelido).getResultList();
+    public Usuario findByApelido(String apelido) {
+       return (Usuario) em.createQuery("select c from User c where c.apelido= :apelido",Usuario.class).setParameter("apelido", apelido).getResultList();
     }
    
 
